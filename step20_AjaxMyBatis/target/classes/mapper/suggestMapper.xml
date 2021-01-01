@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="suggestMapper">
+	
+	<select id="suggestSelect" parameterType="String" resultType="String">
+	select word from suggest 
+	where lower(word) like lower(#{_parameter}) || '%'
+	</select>
+	
+	
+	<!-- 
+  st_no varchar2(3) primary key,
+  st_name varchar2(15) ,
+  st_age int,
+  st_addr varchar2(50),
+  st_phone varchar2(20)
+	 -->
+	<select id="studentSelect"  resultType="studentDTO">
+	select stno,stname,stage,staddr,stphone
+	from student
+	</select>
+	
+	<insert id="studentInsert" parameterType="studentDTO">
+	insert into student(stno,stname,stage,stphone,staddr) values(#{stno},#{stname},#{stage},#{stphone},#{staddr})
+	</insert>
+	
+	<delete id="studentDelete" parameterType="String">
+	delete from student where stno=#{_parameter}
+	</delete>
+	
+	<select id="noCheck" parameterType="String" resultType="String">
+	select stname from student where stno=#{_parameter}
+	</select>
+	
+	
+</mapper>

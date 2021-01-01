@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\user\git\LM"/>
+		<item value="C:\Users\user\git\sulJeong"/>
+	</list>
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED" value="false"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Edu\SpringWorkSpace\step30_BoardJPA"/>
+			<item value="C:\Edu\SpringWorkSpace\step29_SpringBootJPA"/>
+			<item value="C:\Edu\SpringWorkSpace\step28_JPA"/>
+			<item value="C:\Edu\SpringWorkSpace\step27_SecurityDBAjax"/>
+			<item value="C:\Edu\SpringWorkSpace\step26_SecurityDB"/>
+			<item value="C:\Edu\SpringWorkSpace\step18_Homework01"/>
+			<item value="C:\Edu\SpringWorkSpace\step25_SecurityLoginLogout"/>
+			<item value="C:\Edu\SpringWorkSpace\step24_Security"/>
+			<item value="C:\Edu\SpringWorkSpace\step23_userBoardTiles"/>
+			<item value="C:\Edu\SpringWorkSpace\step22_tiles"/>
+			<item value="C:\Edu\SpringWorkSpace\step21_Transaction"/>
+			<item value="C:\Edu\SpringWorkSpace\step20_AjaxMyBatis"/>
+			<item value="C:\Edu\SpringWorkSpace\step19_MyBatisJoinHW"/>
+			<item value="C:\Edu\SpringWorkSpace\step18_MyBatisDynamicHW"/>
+			<item value="C:\Edu\SpringWorkSpace\step17_MyBatisAnnotation"/>
+			<item value="C:\Edu\SpringWorkSpace\step16_MyBatisJoin"/>
+			<item value="C:\Edu\SpringWorkSpace\step15_MyBatisDynamic"/>
+			<item value="C:\Edu\SpringWorkSpace\step14_MyBatis"/>
+			<item value="C:\Edu\SpringWorkSpace\step11_WebMVC"/>
+			<item value="C:\Edu\SpringWorkSpace\step12_WebMVCTest"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+	<section name="CleanDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="627"/>
+		<item key="DIALOG_Y_ORIGIN" value="174"/>
+		<item key="DIALOG_WIDTH" value="666"/>
+		<item key="DIALOG_HEIGHT" value="505"/>
+		<item key="TOGGLE_SELECTED" value="false"/>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="545"/>
+		<item key="DIALOG_Y_ORIGIN" value="209"/>
+	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
+		</list>
+	</section>
+</section>

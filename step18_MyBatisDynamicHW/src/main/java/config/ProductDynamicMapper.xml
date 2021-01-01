@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductDynamicMapper">
+	<sql id="productSelectSql">
+		select code, name, qty, price, detail from productList
+	</sql>
+
+	<select id="select" parameterType="map" resultType="productDTO">
+		<include refid="productSelectSql" />
+		<where>
+			<if test="productDTO.name != null">
+				name like '%' || #{productDTO.name} || '%'
+			</if>
+			<if test="productDTO.detail != null">
+				and detail like '%' || #{productDTO.detail} || '%'
+			</if>
+		</where>
+		<if test="orderColumn!= null">
+			order by ${orderColumn}
+		</if>
+	</select>
+
+	<update id="update" parameterType="productDTO">
+		update productList
+		<set>
+			<if test="name!=null">name = #{name},</if>
+			<if test="qty!=0">qty = #{qty},</if>
+			<if test="price!=0">price = #{price},</if>
+			<if test="detail!=null">detail = #{detail}</if>
+		</set>
+		where code = #{code}
+	</update>
+
+	<select id="selectByCode" parameterType="list" resultType="productDTO">
+		<include refid="productSelectSql" />
+		<where>
+			code in
+			<foreach collection="list" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</where>
+	</select>
+</mapper>

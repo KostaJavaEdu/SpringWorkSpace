@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EmpSelectMapper">
+
+	<resultMap type="empDTO" id="empSelectMap">
+		<id column="empno" property="empno"/>
+		<result column="ename" property="name"/>
+		<result column="job" property="job"/>
+		<result column="sal" property="sal"/>
+		<result column="hiredate" property="hiredate"/>
+	</resultMap>
+	
+	<!-- 자주 사용되는 쿼리를 저장해놓고 참조하여 사용한다. -->
+	<sql id="empSelectSql">
+		<!-- select empno, ename as name, job, sal, hiredate 
+		from emp -->
+		
+		select empno, ename, job, sal, hiredate 
+		from emp
+	</sql>
+	
+	<!-- 전체 레코드 검색(empno, ename, job, sal, hiredate) -->
+	<select id="selectAll" resultMap="empSelectMap">
+		<include refid="empSelectSql"/>
+		order by sal desc
+	</select>
+	
+	<!-- 사원번호에 해당하는 사원검색 -->
+	<select id="selectByEmpno" resultMap="empSelectMap" parameterType="int">
+		<include refid="empSelectSql"/>
+		where empno=#{_parameter}
+	</select>
+	
+	<!-- 전달된 급여 이하의 급여를 받는 사원 검색 -->
+	<select id="selectBySal" parameterType="int" resultMap="empSelectMap">
+		<include refid="empSelectSql"/>
+		where sal &lt;= #{_parameter}
+		order by sal
+	</select>
+	
+	<!-- sal의 최소 - 최대 범위내에 있는 사원검색 -->
+	<select id="selectByMinMax" parameterType="map" resultMap="empSelectMap">
+		<include refid="empSelectSql"/>
+		where sal between #{min} and #{max}
+		order by sal
+	</select>
+	
+	<!-- 정렬하기 -->
+	<select id="selectByOrder" parameterType="string" resultMap="empSelectMap">
+		<include refid="empSelectSql"/>
+		order by ${_parameter}
+	</select>
+	
+	<!-- 검색필드 포함 -->
+	<select id="selectByField" parameterType="map" resultMap="empSelectMap">
+		<include refid="empSelectSql"/>
+		where upper(${column}) like '%' || upper(#{keyword}) || '%'
+	</select>
+	
+</mapper>

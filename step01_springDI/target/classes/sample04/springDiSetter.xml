@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 객체생성 -->
+<bean class="sample04.Student" id="st1"/>
+
+<bean class="sample04.Student" id="st2">
+	<property name="addr" value="판교"/> <!-- setAddr호출 -->
+	<property name="name" value="수녕"/>
+</bean>	
+
+<bean class="sample04.Student" id="st3">
+	<property name="name" value="수녕"/>
+	<property name="no" value="1"/>
+	<property name="phone" value="01074948977"/>
+	<property name="addr" value="용인"/>
+</bean>
+
+<bean class="sample04.StudentDAOImpl" id="studentDAO">
+
+</bean>
+
+<bean class="sample04.StudentServiceImpl" id="service">
+	<property name="studentDao" ref="studentDAO"></property>
+</bean>
+
+<bean class="sample04.StudentController" id="controller">
+	<property name="student" ref="st3"></property>
+	<property name="studentService" ref="service"></property>
+</bean>
+
+</beans>

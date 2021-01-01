@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DeptEmpMapper">
+	<!--
+	사원번호가 전달되면 사원번호에 해당하는 
+ 	 "사원번호, 사원이름 , 부서명, 부서지역" 검색하고
+	사원번호가 없으면 모든 사원의 
+    "사원번호, 사원이름 , 부서명, 부서지역" 검색 한다.
+    	=> 사원별 사원정보와 부서정보 (1:1)
+	  SELECT d.dname, d.loc, e.empno, e.ename
+	  FROM emp e JOIN dept d
+	  ON e.deptno = d.deptno as dno
+	  -->
+	  <resultMap type="empDTO" id="selectEmpDept">
+		  <id column="empno" property="empno"/>
+		  <result column="ename" property="ename"/>
+		  <result column="deptno" property="deptno"/>
+		  <association property="deptDTO" javaType="deptDTO">
+			  <id column="dno" property="deptno"/>
+			  <result column="dname" property="dname"/>
+			  <result column="loc" property="loc"/>
+			  <result column="deptno" property="deptno"/>
+		  </association>
+	  </resultMap>
+	  
+	  <select id="selectFirst" resultMap="selectEmpDept" parameterType="empDTO">
+	  	SELECT d.dname, d.loc, e.empno, e.ename
+	  	FROM emp e JOIN dept d
+	  	ON e.deptno = d.deptno
+	  	<where>
+	  		e.empno=#{empno}
+	  	</where>
+	  </select>
+	  
+	  <!-- 
+	  	문제1-1) 각 부서별 사원이름검색((deptno,dname, loc, empno,ename)(1:다)
+	   -->
+	   <resultMap type="deptDTO" id="selectByDeptno">
+	   	<id column="deptno" property="deptno"/>
+	   	<result column="dname" property="dname"/>
+	   	<result column="loc" property="loc"/>
+	   	<association property="list" javaType="empDTO">
+	   		<id column="empno" property="empno"/>
+	   		<result column="ename" property="ename"/>
+	   		<result column="dno" property="deptno"/>
+	   	</association>
+	   </resultMap>
+	   
+	   <select id="selectSecond" resultMap="selectByDeptno" parameterType="deptDTO">
+	   	SELECT d.deptno as dno ,d.dname, d.loc, e.empno, e.ename
+	  	FROM emp e JOIN dept d
+	  	ON e.deptno = d.deptno
+	  	<where>
+	  		d.deptno=${deptno}
+	  	</where>
+	   </select>
+	
+</mapper>

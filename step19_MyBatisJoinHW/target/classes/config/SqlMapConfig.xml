@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 외부 property 파일 위치 설정 -->
+	<properties resource="config/dbInfo.properties" />
+
+	<!-- 옵션 설정 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<!-- 객체 타입 별칭 -->
+	<typeAliases>
+		<typeAlias type="kosta.domain.DeptDTO" alias="deptDTO"/>
+		<typeAlias type="kosta.domain.EmpDTO" alias="empDTO"/>
+		<typeAlias type="kosta.domain.SalgradeDTO" alias="salgradeDTO"/>
+	</typeAliases>
+
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="UNPOOLED"> <!-- POOLED | UNPOOLED -->
+				<property name="driver" value="${driverName}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${userName}" />
+				<property name="password" value="${userPass}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="config/JoinMapper.xml" />
+	</mappers>
+
+
+</configuration>

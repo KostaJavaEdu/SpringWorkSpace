@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productMapper">
+	
+	<sql id="selectProductSql">
+		select * from productList
+	</sql>
+
+<!-- 	/**
+	   * [2].   ex) select * from productList
+	   *         ex)  select * from productList where 검색필드 like  검색단어
+	   *          ex) select *from productList order by 정렬대상
+	   *          ex) select * from productList where 검색필드 like  검색단어  order by 정렬대상
+	   * */ -->
+	   
+	   <select id="selectByWhat" resultType="productListDTO" parameterType="map">
+	   		<include refid="selectProductSql"/>
+	   		 <where>
+		   		 <if test="keyField!=null">
+		   		 ${keyField} like '%' || #{keyWord} || '%'
+		   		 </if>
+	   		 </where>
+	   		 
+	   		 <if test="order!=null">
+	   		 	order by #{order} desc
+	   		 </if>
+	   </select>
+	   
+	   <!-- 
+	   	select * from productList where in 상품코드 in (?,?,...)
+	    -->
+	    <select id="foreachSelect" resultType="productListDTO" parameterType="list">
+	    	<include refid="selectProductSql"/>
+	    	<where>
+	    	code in
+	    	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+	    		#{item}
+	    	</foreach>
+	    	</where> 
+	    </select>
+</mapper>

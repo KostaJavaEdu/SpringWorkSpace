@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<!-- 외부 properties파일의 위치를 설정 -->
+<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="location"> setLocation메소드 호출
+		<value>classpath:sample06/customerInfo.properties</value>
+	</property>
+</bean> -->
+
+<!-- 외부 properties파일 여러개 위치 설정하기 -->
+<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="locations">
+		<array>
+			<value>classpath:sample06/customerInfo.properties</value>
+			<value>classpath:sample06/customerInfo2.properties</value>
+		</array>
+	</property>
+</bean>
+ -->
+ 
+ 
+ <!-- 외부의 properties파일의 위치를 설정해주는 객체를 springContainer가 생성하도록 설정한다. -->
+ <context:property-placeholder location="classpath:sample06/customerInfo.properties,
+ 													classpath:sample06/customerInfo2.properties"/>
+
+
+<!-- 객체생성 -->
+<bean class="sample06.Customer" id="cu1"/>
+<bean class="sample06.Customer" id="cu2">
+	<constructor-arg value="choi"/>
+</bean>
+
+<bean class="sample06.Customer" id="cu3">
+	<constructor-arg value="kim"/>
+	<property name="addr" value="서울"/>
+	<property name="age" value="20"/>
+</bean>
+
+<bean class="sample06.Customer" id="cu4" 
+			p:addr="판교" p:age="10" p:id="queen"/>
+
+<bean class="sample06.Customer" id="cu5"
+			p:addr="${addr}" p:age="${age}" p:id="${id}"/>
+	
+
+<bean class="sample06.Customer" id="cu6">
+	<property name="id" value="${user.id}"></property>
+	<property name="age" value="${user.age}"></property>
+	<property name="addr" value="${user.addr}"></property>
+</bean>
+
+</beans>

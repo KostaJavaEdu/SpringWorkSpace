@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JoinMapper">
+	<resultMap type="empDTO" id="empAssociationMap">
+		<id column="empno" property="empno" />
+		<result column="ename" property="ename" />
+		<result column="job" property="job" />
+		<result column="sal" property="sal" />
+		<association property="deptDTO" javaType="deptDTO">
+			<id column="deptno" property="deptno" />
+			<result column="dname" property="dname" />
+			<result column="loc" property="loc" />
+		</association>
+		<association property="salgradeDTO" javaType="salgradeDTO">
+			<result column="grade" property="grade" />
+			<result column="hisal" property="hisal" />
+			<result column="losal" property="losal" />
+		</association>
+	</resultMap>
+
+	<resultMap type="deptDTO" id="deptCollectionMap">
+		<id column="deptno" property="deptno" />
+		<result column="dname" property="dname" />
+		<result column="loc" property="loc" />
+		<collection property="empList" ofType="empDTO">
+			<id column="empno" property="empno" />
+			<result column="ename" property="ename" />
+		</collection>
+	</resultMap>
+
+	<resultMap type="salgradeDTO" id="salgradeCollectionMap">
+		<result column="grade" property="grade" />
+		<result column="hisal" property="hisal" />
+		<result column="losal" property="losal" />
+		<collection property="empList" ofType="empDTO">
+			<id column="empno" property="empno" />
+			<result column="ename" property="ename" />
+			<result column="job" property="job" />
+			<result column="sal" property="sal" />
+		</collection>
+
+	</resultMap>
+
+
+	<select id="selectByEmpno" parameterType="empDTO"
+		resultMap="empAssociationMap">
+		SELECT d.dname, d.loc, e.empno, e.ename
+		FROM emp e JOIN dept d
+		ON
+		e.deptno = d.deptno
+		<if test="empno != 0">
+			<where>
+				e.empno = #{empno}
+			</where>
+		</if>
+	</select>
+
+	<select id="selectByDeptno" parameterType="deptDTO"
+		resultMap="deptCollectionMap">
+		SELECT d.deptno, d.dname, d.loc, e.empno, e.ename
+		FROM emp e JOIN dept
+		d
+		ON
+		e.deptno = d.deptno
+		<if test="deptno != 0">
+			<where>
+				d.deptno = #{deptno}
+			</where>
+		</if>
+	</select>
+
+	<select id="selectSalGradeByEmpno" parameterType="empDTO"
+		resultMap="empAssociationMap">
+		SELECT empno, ename, job, sal, grade, losal, hisal
+		FROM emp e JOIN
+		salgrade s
+		ON e.sal BETWEEN s.losal AND s.hisal
+		<if test="empno != 0">
+			<where>
+				e.empno = #{empno}
+			</where>
+		</if>
+	</select>
+
+	<select id="selectEmpByGrade" parameterType="salgradeDTO"
+		resultMap="salgradeCollectionMap">
+		SELECT empno, ename, job, sal, grade, losal, hisal
+		FROM emp e JOIN
+		salgrade s
+		ON e.sal BETWEEN s.losal AND s.hisal
+		<if test="grade != 0">
+			<where>
+				s.grade = #{grade}
+			</where>
+		</if>
+	</select>
+</mapper>

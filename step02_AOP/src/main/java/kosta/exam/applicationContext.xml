@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+<bean class="kosta.exam.MessageServiceImpl" id="target"/>
+<bean class="kosta.exam.TimerAdvice" id="advice"/>
+<bean class="kosta.exam.UserService" id="userService"/>
+
+<!-- aop설정 -->
+<!-- 
+	expose-proxy="true" 는 AopContext를 활성화 (사용할 수 있도록)
+ -->
+<aop:config proxy-target-class="false" expose-proxy="true">
+  <aop:aspect id="aspect" ref="advice">
+  <aop:pointcut expression="execution(public * kosta.exam.*.*Hello())" id="pointCut"/>
+  	<!-- <aop:around method="around" pointcut="execution(public * kosta.exam.*.*Hello())"/> -->
+  	<aop:around method="around" pointcut-ref="pointCut"/>
+  </aop:aspect>
+</aop:config>
+
+
+
+</beans>

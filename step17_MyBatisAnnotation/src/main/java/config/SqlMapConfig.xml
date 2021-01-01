@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 외부 properties파일의 위치를 설정 -->
+	<properties resource="config/dbInfo.properties"/>
+	
+	<!-- 옵션 설정 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="UNPOOLED"> <!-- 웹 할때 : POOLED | 순수 자바 어플리케이션 : UNPOOLED -->
+				<property name="driver" value="${driverName}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${userName}" />
+				<property name="password" value="${userPass}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper class="kosta.repository.EmpMapper"/>
+	</mappers>
+	
+	
+</configuration>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets 
+		and Filters -->
+		<context-param> 
+			<param-name>contextConfigLocation</param-name> 
+			<param-value>/WEB-INF/spring/root-context.xml</param-value> 
+		</context-param> 
+
+	<!-- 
+		Creates the Spring Container shared by all Servlets and Filters 
+		자동으로 /WEB-INF/applicationContext.xml 필요하다.
+		  : 위치와 이름을 변경하려면 context-param이 필요하다.
+	-->
+	    <listener> 
+			<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
+		</listener>
+
+	<!-- post방식 한글 인코딩 설정 -->
+	<filter>
+		<filter-name>charaterEncoding</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>charaterEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Processes application requests -->
+
+
+	<!-- DispatcherServlet이 생성되면서 자동으로 springBean설정 문서를 찾는다. 기본 /WEB-IMF/서블릿이름-servlet.xml 
+		만약, 내가 파일의 위치와 이름을 변경하고 싶다면 init-param을 설정한다. -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+			/WEB-INF/spring/appServlet/servlet-context.xml
+			/WEB-INF/spring/appServlet/upDown-context.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+		<url-pattern>/blog/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- 관리자 전용 DispatcherServlet 등록 -->
+	<servlet>
+		<servlet-name>adminServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+			/WEB-INF/spring/appServlet/admin-context.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>adminServlet</servlet-name>
+		<url-pattern>*.admin</url-pattern>
+	</servlet-mapping>
+</web-app>

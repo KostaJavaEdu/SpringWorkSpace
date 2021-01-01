@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardMapper">
+	
+<select id="boardList" resultType="electronics">
+   select model_num, model_name, price, writeday, fname, fsize, readnum
+   from Electronics
+</select>
+
+<insert id="boardInsert" parameterType="electronics">
+	insert into electronics(model_num,model_name,price,description,password,fname,fsize,writeday,readnum) 
+	values(#{modelNum},#{modelName},#{price},#{description},#{password},#{fname},#{fsize},sysdate,0)
+</insert>
+
+<select id="boardRead" parameterType="string" resultType="electronics">
+    select model_num,writeday,readnum,model_name,description,fname,fsize,password
+    from Electronics
+    where model_num=#{_parameter}
+</select>
+
+<delete id="boardDelete" parameterType="map">
+	delete from Electronics
+	where model_num=#{modelNum} and password=#{password}
+</delete>
+
+<update id="boardUpdate" parameterType="electronics">
+    	update Electronics 
+    	<trim prefix="set" suffixOverrides=",">
+	    	<if test="price!=0"> price = #{price}, </if>
+	    	<if test="modelName!=null"> model_name = #{modelName}, </if>
+	    	<if test="description!=null"> description = #{description} </if>
+    	</trim>
+    	where model_num=#{modelNum}
+</update>
+
+<update id="readnum" parameterType="String">
+	update Electronics
+	set readnum = readnum+1
+	where model_num=#{_parameter}
+</update>
+	
+</mapper>
